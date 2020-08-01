@@ -25,7 +25,7 @@ class CreateTransactionsTable extends Migration
             $table->string('order_id');
             $table->string('status');
             $table->string('mac_string');
-            $table->foreign('mac_string')->references('donation_ref')->on('donations');
+            $table->foreign('order_id')->references('donation_ref')->on('donations');
             $table->timestamps();
         });
     }

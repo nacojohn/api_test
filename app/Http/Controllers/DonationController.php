@@ -48,11 +48,9 @@ class DonationController extends Controller
         $donation->ip = $request->ip();
         $donation->save();
 
-        $success_url = 'http://localhost/apps_api/api_upwork_test/public/success'; $callback_url = 'http://localhost/apps_api/api_upwork_test/public/callback';
-        $back_url = 'http://localhost/apps_api/api_upwork_test/public/'; $failed_url = 'http://localhost/apps_api/api_upwork_test/public/';
-        // $success_url = ''; $callback_url = '';
-        // $back_url = ''; $failed_url = '';
-        $error_url = 'http://localhost/apps_api/api_upwork_test/public/'; $currency = isset($input['currency']) ? $input['currency'] : 'USD';
+        $success_url = env('APP_URL') . '/success'; $callback_url = 'http://test.rad5.com.ng/callback/'; // env('APP_URL') . '/callback';
+        $back_url = env('APP_URL'); $failed_url = env('APP_URL') . '/failed';
+        $error_url = env('APP_URL') . '/error'; $currency = isset($input['currency']) ? $input['currency'] : 'USD';
 
         $string = $input['amount'] . $back_url . $callback_url . $currency . $error_url . $failed_url . env('GATEWAY_MERCHANT') . $donationRef . $success_url . $donation->id . env('GATEWAY_SECRET');
         $string_nospace = str_replace(' ', '', $string);
@@ -93,6 +91,10 @@ class DonationController extends Controller
     public function viewDonations(Request $request)
     {
         $allDonations = Donation::all();
+
+        foreach ($allDonations as $donation) {
+            $donation->transaction;
+        }
 
         return $this->sendResponse($allDonations->toArray(), 'Donations retrieved');
     }
